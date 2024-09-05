@@ -93,6 +93,8 @@ Navigate to the **carla** directory. Open **./Util/BuildTools/Setup.sh** and rep
 
 Follow the rest of the instructions from the [tutorial](https://carla.readthedocs.io/en/latest/build_linux/).
 
+When running `make PythonAPI` you may run into a Build.Boost error. To address this, first make sure that anaconda3 is disabled (if this applied to you). Then, follow the steps below regarding compiling Boost 1.72.0 to manually install and build Boost 1.72.0 from the source.
+
 
 Now that you have a working CARLA 0.9.13 build, go back to the [DReyeVR installation guide](https://github.com/HARPLab/DReyeVR/blob/main/Docs/Install.md) and follow the rest of the steps to install DReyeVR on top of it.
 
@@ -106,7 +108,7 @@ Now that you have a working CARLA 0.9.13 build, go back to the [DReyeVR installa
       which python3
       ... PATH/TO/ANACONDA/envs/carla/bin/python3 # example output
 
-      # go to carla/install dir from here
+      # go to carla/include dir from here
       cd PATH/TO/ANACONDA/envs/carla/include
 
       # create a symlink between python3.7 -> python3.7m
