@@ -87,6 +87,8 @@ Once download is finished, from the new **carla** directory, run
 ```bash
 Update.sh
 ```
+You may get an error when running `Update.sh` and may need to to modify line 50 of `Update.sh` to `https://carla-assets.s3.us-east-005.backblazeb2.com/${CONTENT_ID}.tar.gz`
+
 
 Navigate to the **carla** directory. Open **./Util/BuildTools/Setup.sh** and replace `XERCESC_VERSION=3.2.3` (line 428) with `XERCESC_VERSION=3.2.5` (or whatever version of xerces is available). Next, open **./Util/BuildTools/BuildOSM2ODR.sh**, and replace all instances of `xerces-c-3.2.3` with `xerces-c-3.2.5`.
 
