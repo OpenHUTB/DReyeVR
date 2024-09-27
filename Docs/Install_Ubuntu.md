@@ -87,11 +87,15 @@ Once download is finished, from the new **carla** directory, run
 ```bash
 Update.sh
 ```
+You may get an error when running `Update.sh` and may need to to modify line 50 of `Update.sh` to `https://carla-assets.s3.us-east-005.backblazeb2.com/${CONTENT_ID}.tar.gz`
 
-Navigate to the **carla** directory. Open **./Util/BuildTools/Setup.sh** and replace `XERCESC_VERSION=3.2.3` (line 428) with `XERCESC_VERSION=3.2.4`. Next, open **./Util/BuildTools/BuildOSM2ODR.sh**, and replace all instances of `xerces-c-3.2.3` with `xerces-c-3.2.4`.
+
+Navigate to the **carla** directory. Open **./Util/BuildTools/Setup.sh** and replace `XERCESC_VERSION=3.2.3` (line 428) with `XERCESC_VERSION=3.2.5` (or whatever version of xerces is available). Next, open **./Util/BuildTools/BuildOSM2ODR.sh**, and replace all instances of `xerces-c-3.2.3` with `xerces-c-3.2.5`.
 
 
 Follow the rest of the instructions from the [tutorial](https://carla.readthedocs.io/en/latest/build_linux/).
+
+When running `make PythonAPI` you may run into a Build.Boost error. To address this, first make sure that anaconda3 is disabled (if this applied to you). Then, follow the steps below regarding compiling Boost 1.72.0 to manually install and build Boost 1.72.0 from the source.
 
 
 Now that you have a working CARLA 0.9.13 build, go back to the [DReyeVR installation guide](https://github.com/HARPLab/DReyeVR/blob/main/Docs/Install.md) and follow the rest of the steps to install DReyeVR on top of it.
@@ -106,7 +110,7 @@ Now that you have a working CARLA 0.9.13 build, go back to the [DReyeVR installa
       which python3
       ... PATH/TO/ANACONDA/envs/carla/bin/python3 # example output
 
-      # go to carla/install dir from here
+      # go to carla/include dir from here
       cd PATH/TO/ANACONDA/envs/carla/include
 
       # create a symlink between python3.7 -> python3.7m
