@@ -272,7 +272,7 @@ make check CARLA=../carla
       which python3
       ... PATH/TO/ANACONDA/envs/carla/bin/python3 # example output
 
-      # go to carla/install dir from here
+      # go to carla/include dir from here
       cd PATH/TO/ANACONDA/envs/carla/include
 
       # create a symlink between python3.7 -> python3.7m
@@ -283,9 +283,10 @@ make check CARLA=../carla
       Find the section named `Get boost` includes and comment out the `wget` lines.
       Now when you `make LibCarla` again, the `boost` errors should be resolved.
       - For more information see the bottom of this [SO post](https://stackoverflow.com/questions/42839382/failing-to-install-boost-in-python-pyconfig-h-not-found)
+      - Additionally, you may need to add `export CPLUS_INCLUDE_PATH="$CPLUS_INCLUDE_PATH:/path/to/anaconda3/envs/carla13/include/python3.7m"` to `~/.bashrc`
     </details>
 
-  - **READ THIS FIRST (Windows)**: Windows anaconda is a bit more of a pain to deal with.
+- **READ THIS FIRST (Windows)**: Windows anaconda is a bit more of a pain to deal with.
     <details>
 
     <summary> Show instructions to get Anaconda working on Windows </summary>
