@@ -1,5 +1,6 @@
 # DReyeVR
 ### Welcome to DReyeVR, a VR driving simulator for behavioural and interactions research.
+**Note**: This is a version of DReyeVR intended for use for the [Driver SA](https://github.com/HARPLab/DriverSA/tree/main) project, Modeling Drivers’ Situational Awareness from Eye Gaze for Driving Assistance
 
 [![Main Figure](Docs/Figures/demo.gif)](https://www.youtube.com/watch?v=yGIPSDOMGpY)
 
