@@ -1,115 +1,114 @@
 # DReyeVR
-### Welcome to DReyeVR, a VR driving simulator for behavioural and interactions research.
+### 欢迎来到 DReyeVR, 这是一个针对行为和交互研究的虚拟现实驾驶仿真器。
 
 [![Main Figure](Docs/Figures/demo.gif)](https://www.youtube.com/watch?v=yGIPSDOMGpY)
 
-[Submission Video Demonstration (YouTube)](https://www.youtube.com/watch?v=yGIPSDOMGpY)
+[视频演示 (YouTube)](https://www.youtube.com/watch?v=yGIPSDOMGpY)
 <!-- Welcome to the DReyeVR wiki! -->
 
 [![Build Status](https://github.com/HARPLab/DReyeVR/actions/workflows/ci.yml/badge.svg)](https://github.com/HARPLab/DReyeVR/actions/workflows/ci.yml)
 
-This project extends the [`Carla`](https://github.com/carla-simulator/carla/tree/0.9.13) simulator to add virtual reality integration, a first-person maneuverable ego-vehicle, eye tracking support, and several immersion enhancements.
+该项目扩展了 [`Carla`](https://github.com/carla-simulator/carla/tree/0.9.13) 模拟器，增加了虚拟现实集成、第一人称可操纵的自我车辆、眼动追踪支持和多种沉浸感增强功能。
 
-If you have questions, hopefully our [F.A.Q. wiki page](https://github.com/HARPLab/DReyeVR/wiki/Frequently-Asked-Questions) and [issues page](https://github.com/HARPLab/DReyeVR/issues?q=is%3Aissue+is%3Aclosed) can answer some of them.
+如果您有任何疑问，希望我们的常见问题解答 [F.A.Q. 维基页面](https://github.com/HARPLab/DReyeVR/wiki/Frequently-Asked-Questions) 和 [问题页面](https://github.com/HARPLab/DReyeVR/issues?q=is%3Aissue+is%3Aclosed) 可以解答其中的一些问题。
 
-**IMPORTANT:** Currently DReyeVR only supports Carla versions: [0.9.13](https://github.com/carla-simulator/carla/tree/0.9.13) with Unreal Engine 4.26
+**重要提示：** 目前 DReyeVR 仅支持 Carla 版本：[0.9.13](https://github.com/carla-simulator/carla/tree/0.9.13) 和 Unreal Engine 4.26
 
-## Highlights
-### Ego Vehicle
-Fully drivable **virtual reality (VR) ego-vehicle** with [SteamVR integration](https://github.com/ValveSoftware/steamvr_unreal_plugin/tree/4.23) (see [EgoVehicle.h](DReyeVR/EgoVehicle.h))
-- SteamVR HMD head tracking (orientation & position)
-  - We have tested with the following devices:
-    | Device | VR Supported | Eye tracking | OS |
+## 亮点
+### 自我车辆
+[集成 SteamVR](https://github.com/ValveSoftware/steamvr_unreal_plugin/tree/4.23) 的完全可驾驶**虚拟现实自我车辆**（参见 [EgoVehicle.h](DReyeVR/EgoVehicle.h) ）
+- SteamVR HMD 头部跟踪 (朝向 & 位置)
+  - 我们已经使用以下设备进行了测试：
+    | 设备 | 虚拟现实支持 | 眼动跟踪 | 操作系统 |
     | --- | --- | --- | --- |
     | [HTC Vive Pro Eye](https://business.vive.com/us/product/vive-pro-eye-office/) | :white_check_mark: | :white_check_mark: | Windows, Linux |
     | [Quest 2](https://www.oculus.com/quest-2/) | :white_check_mark: | :x: | Windows |
-  - While we haven't tested other headsets, they should still work for basic VR usage (not eye tracking) if supported by SteamVR.
-  - Eye tracking is currently **ONLY** supported on the HTC Vive Pro Eye since we use [SRanipal](https://forum.htc.com/topic/5641-sranipal-faq/) for the eye-tracker SDK. We are happy to support more devices through contributions for adding other SDKs. 
-- Vehicle controls:
-  - Generic keyboard WASD + mouse
-  - Support for Logitech Steering wheel with this open source [LogitechWheelPlugin](https://github.com/HARPLab/LogitechWheelPlugin) 
-    - Includes force-feedback with the steering wheel.
-    - We used a [Logitech G923 Racing Wheel & Pedals](https://www.logitechg.com/en-us/products/driving/driving-force-racing-wheel.html)
-      - Full list of supported devices can be found [here](https://github.com/HARPLab/LogitechWheelPlugin/blob/master/README.md) though we can't guarantee out-of-box functionality without testing. 
-- Realistic (and parameterizable) rear & side view mirrors 
-  - WARNING: very performance intensive
-- Vehicle dashboard:
-  - Speedometer (in miles-per-hour by default)
-  - Gear indicator
-  - Turn signals
-- Dynamic steering wheel
-  - Adjustable parameters, responsive to steering input
-  - See our documentation on this [here](Docs/Model.md)
-- "Ego-centric" audio 
-  - Responsive engine revving (throttle-based)
-  - Turn signal clicks
-  - Gear switching
-  - Collisions
-- Fully compatible with the existing Carla [PythonAPI](https://carla.readthedocs.io/en/0.9.13/python_api/) and [ScenarioRunner](https://github.com/carla-simulator/scenario_runner/tree/v0.9.13)
-  - Minor modifications were made. See [Usage.md](Docs/Usage.md) documentation.
-- Fully compatible with the Carla [Recorder and Replayer](https://carla.readthedocs.io/en/0.9.13/adv_recorder/) 
-  - Including HMD pose/orientation & sensor reenactment 
-- Ability to handoff/takeover control to/from Carla's AI wheeled vehicle controller
-- Carla-based semantic segmentation camera (see [`Shaders/README.md`](Shaders/README.md))
-### Ego Sensor
-Carla-compatible **ego-vehicle sensor** (see [EgoSensor.h](DReyeVR/EgoSensor.h)) is an "invisible sensor" that tracks the following:
-- Real-time **Eye tracking** with the [HTC Vive Pro Eye](https://enterprise.vive.com/us/product/vive-pro-eye-office/) VR headset
-  - Eye tracker data includes:
-    - Timing information (based off headset, world, and eye-tracker)
-    - 3D Eye gaze ray (left, right, & combined)
-    - 2D Pupil position (left & right)
-    - Pupil diameter (left & right)
-    - Eye Openness (left & right)
-    - Focus point in the world & hit actor information
-    - See [DReyeVRData.h:EyeTracker](Carla/Sensor/DReyeVRData.h) for the complete list
-  - Eye reticle visualization in real time
-- Real-time user inputs (throttle, steering, brake, turn signals, etc.)
-- Image (screenshot) frame capture based on the camera 
-  - Typically used in Replay rather than real-time because highly performance intensive.
-- Fully compatible with the LibCarla data serialization for streaming to a PythonAPI client (see [LibCarla/Sensor](LibCarla/Sensor))
-  - We have also tested and verified support for (`rospy`) ROS integration our sensor data streams
+  - 虽然我们还没有测试其他耳机，但如果 SteamVR 支持，它们仍然可以用于基本的虚拟现实用途（非眼动追踪）。
+  - 由于我们使用 [SRanipal](https://forum.htc.com/topic/5641-sranipal-faq/) 作为眼动追踪器 SDK，因此眼动追踪目前**仅**支持 HTC Vive Pro Eye。我们很乐意通过贡献添加其他 SDK 来支持更多设备。
+- 车辆控制：
+  - 通用键盘 WASD + 鼠标
+  - 使用此开源 [LogitechWheelPlugin](https://github.com/HARPLab/LogitechWheelPlugin) 支持 Logitech 方向盘
+    - 包括方向盘的力反馈。
+    - 我们使用了 [Logitech G923 赛车方向盘和踏板](https://www.logitechg.com/en-us/products/driving/driving-force-racing-wheel.html)
+      - 虽然我们可以在没有经过测试的情况下保证开箱即用的功能，但是可以在 [此处](https://github.com/HARPLab/LogitechWheelPlugin/blob/master/README.md) 找到受支持设备的完整列表。
+- 逼真的（可参数化的）后视镜和侧视镜 
+  - 警告：非常耗性能
+- 车辆仪表板：
+  - 速度计（默认单位为英里/小时）
+  - 档位指示器
+  - 转向信号
+- 动力学方向盘
+  - 可调节参数，响应转向输入
+  - 请在 [此处](Docs/Tutorials/Model.md) 查看我们的相关文档
+- “以自我为中心”的音频
+  - 响应式发动机转速（基于油门）
+  - 转向灯咔嗒声
+  - 档位切换
+  - 碰撞
+- 与现有的 [Carla PythonAPI](https://carla.readthedocs.io/en/0.9.13/python_api/) 和 [ScenarioRunner](https://github.com/carla-simulator/scenario_runner/tree/v0.9.13) 完全兼容
+  - 进行了微小修改。请参阅 [Usage.md](Docs/Usage.md) 文档。
+- 与 [Carla Recorder 和 Replayer](https://carla.readthedocs.io/en/0.9.13/adv_recorder/) 完全兼容
+- 能够将控制权移交给/接管 Carla 的 AI 轮式车辆控制器
+- 基于 Carla 的语义分割相机（参见 [`Shaders/README.md`](Shaders/README.md) ）
+### 自我传感器
+与 Carla 兼容的**自我车辆传感器**（参见 [EgoSensor.h](DReyeVR/EgoSensor.h) ）是一种“隐形传感器”，可跟踪以下信息：
+- 使用 [HTC Vive Pro Eye](https://enterprise.vive.com/us/product/vive-pro-eye-office/) VR 耳机进行实时**眼动跟踪** 
+  - 眼动仪数据包括：
+    - 时间信息（基于耳机、世界和眼动仪）
+    - 三维眼睛凝视光线（左、右及组合）
+    - 2D 瞳孔位置（左和右）
+    - 瞳孔直径（左和右）
+    - 眼睛睁开度（左和右）
+    - 世界中的焦点及命中的参与者信息
+    - 完整列表请参见 [DReyeVRData.h:EyeTracker](Carla/Sensor/DReyeVRData.h)
+  - 实时眼标线可视化
+- 实时用户输入（油门、转向、刹车、转向信号等）
+- 基于摄像头的图像（截图）帧捕获 
+  - 由于性能密集程度高，通常用于重播而不是实时。
+- 与 LibCarla 数据序列化完全兼容，可流式传输到 PythonAPI 客户端（参见 [LibCarla/Sensor](LibCarla/Sensor) ）
+  - 我们还测试并验证了对（`rospy`）ROS 集成传感器数据流的支持
 
-### Other additions:
-- Custom DReyeVR config file for one-time runtime params. See [DReyeVRConfig.ini](Configs/DReyeVRConfig.ini)
-  - Especially useful to change params without recompiling everything.
-  - Uses standard c++ io management to read the file with minimal performance impact. See [DReyeVRUtils.h](DReyeVR/DReyeVRUtils.h).
-- World ambient audio
-  - Birdsong, wind, smoke, etc. (See [Docs/Sounds.md](Docs/Sounds.md))
-- Non-ego-centric audio (Engine revving from non-ego vehicles)
-- Synchronized Replay with per-frame frame capture for post-hoc analysis (See [Docs/Usage.md](Docs/Usage.md))
-- Recorder/replayer media functions
-  - Added in-game keyboard commands Play/Pause/Forward/Backward/etc.
-- Static in-environment directional signs for natural navigation (See [`Docs/Signs.md`](Docs/Signs.md))
-- Adding weather to the Carla recorder/replayer/query (See this [Carla PR](https://github.com/carla-simulator/carla/pull/5235))
-- Custom dynamic 3D actors with full recording support (eg. HUD indicators for direction, AR bounding boxes, visual targets, etc.). See [CustomActor.md](Docs/CustomActor.md) for more.
-- (DEBUG ONLY) Foveated rendering for improved performance with gaze-aware (or fixed) variable rate shading
+### 其他补充：
+- 用于一次性运行时参数的自定义 DReyeVR 配置文件。请参阅 [DReyeVRConfig.ini](Configs/DReyeVRConfig.ini) 
+  - 特别适用于无需重新编译所有内容即可更改参数。
+  - 使用标准 c++ io 管理来读取文件，对性能的影响最小。请参阅 [DReyeVRUtils.h](DReyeVR/DReyeVRUtils.h) 。
+- 世界环境音频
+  - 鸟鸣声、风声、烟雾声等（参见 [Docs/Sounds.md](Docs/Sounds.md) ） 
+- 非自我为中心的音频（非自我车辆的发动机转速）
+- 同步重放并逐帧捕获以进行事后分析（参见 [Docs/Usage.md](Docs/Usage.md) ） 
+- 记录器/重放器媒体功能
+  - 添加了游戏内键盘命令播放/暂停/前进/后退/等。
+- 用于自然导航的静态环境方向标志（参见 [`Docs/Signs.md`](Docs/Signs.md) ）
+- 将天气信息添加到 Carla 记录器/重放器/查询中（参见此 [Carla PR](https://github.com/carla-simulator/carla/pull/5235) ）
+- 自定义动态 3D 参与者，具有全面录制支持（例如方向的头显指示器、AR 边界框、视觉目标等）。有关更多信息，请参阅 [CustomActor.md](Docs/CustomActor.md) 。 
+- （仅调试）注视点渲染可通过注视感知（或固定）可变速率着色来提高性能
 
-## Install/Build
-See [`Docs/Install.md`](Docs/Install.md) to:
-- Install and build `DReyeVR` on top of a working `Carla` repository. 
-- Download plugins for `DReyeVR` required for fancy features such as:
-  - Eye tracking (SRanipal)
-  - Steering wheel/pedals (Logitech)
-- Set up a `conda` environment for DReyeVR PythonAPI
+## 安装/构建
+查看 [`Docs/Install.md`](Docs/Install.md) :
+- 在可运行的 `Carla` 存储库上安装并构建 `DReyeVR` 。
+- 下载 `DReyeVR` 所需的插件，以实现以下精彩功能：
+  - 眼动跟踪 (SRanipal)
+  - 方向盘/踏板 (Logitech)
+- 为 DReyeVR PythonAPI 设置 `conda` 环境
 
-## OS compatibility
-| OS | VR | Eye tracking | Audio | Keyboard+Mouse | Racing wheel | Foveated Rendering (Editor) |
-| --- | --- | --- | --- | --- | --- | --- |
+## 操作系统兼容性
+| 操作系统    | 虚拟现实             | 眼动跟踪   | 音频            | 键盘+鼠标         | 赛车方向盘 | 注视点渲染（编辑器）         |
+|---------|--------------------|--------------------|--------------------|--------------------| --- |--------------------|
 | Windows | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| Linux | :white_check_mark: | :x: | :white_check_mark: | :white_check_mark: | :x: | :x: |
-| MacOS | :x: | :x: | :white_check_mark: | :white_check_mark: | :x: | :x: |
-- While Windows (10) is recommended for optimized VR support, all our work translates to Linux systems except for the eye tracking and hardware integration which have Windows-only dependencies.
-  - Unfortunately the eye-tracking firmware is proprietary & does not work on Linux
-    - This is (currently) only supported on Windows because of some proprietary dependencies between [HTC SRanipal SDK](https://developer.vive.com/resources/knowledgebase/vive-sranipal-sdk/) and Tobii's SDK. Those interested in the Linux discussion for HTC's Vive Pro Eye Tracking can follow the subject [here (Vive)](https://forum.vive.com/topic/6994-eye-tracking-in-linux/), [here (Vive)](https://forum.vive.com/topic/7012-vive-pro-eye-on-ubuntu-16-or-18/), and [here (Tobii)](https://developer.tobii.com/community/forums/topic/vive-pro-eye-with-stream-engine/).
-  - Additionally, the [LogitechWheelPlugin](https://github.com/HARPLab/LogitechWheelPlugin) we use only has Windows support currently. Though it should be possible to use the G923 on Linux as per the [Arch Wiki](https://wiki.archlinux.org/title/Logitech_Racing_Wheel).
-- Also, although MacOS is not officially supported by CARLA, we have development happening on an Apple Silicon machine and have active forks of CARLA + UE4.26 with MacOS 12+ support. Note that this is primarily for development, as it is the most limited system by far. 
+| Linux   | :white_check_mark: | :x:                | :white_check_mark: | :white_check_mark: | :x: | :x:                |
+| MacOS   | :x:                | :x:                | :white_check_mark: | :white_check_mark: | :x: | :x:                |
+- 虽然建议使用 Windows（10）来优化虚拟现实支持，但除了眼动跟踪和硬件集成（它们仅依赖于 Windows）之外，我们所有的工作都转移到了 Linux 系统。 
+  - 不幸的是，眼动追踪固件是专有的，无法在 Linux 上运行
+    - 由于 [HTC SRanipal SDK](https://developer.vive.com/resources/knowledgebase/vive-sranipal-sdk/) 和 Tobii 的 SDK 之间存在一些专有依赖关系，因此目前仅支持 Windows。对 HTC Vive Pro 眼动追踪的 Linux 讨论感兴趣的人可以关注 [ 此处 (Vive)](https://forum.vive.com/topic/6994-eye-tracking-in-linux/) 、[此处 (Vive)](https://forum.vive.com/topic/7012-vive-pro-eye-on-ubuntu-16-or-18/) 和 [此处 (Tobii)](https://developer.tobii.com/community/forums/topic/vive-pro-eye-with-stream-engine/) 的主题。
+  - 此外，我们使用的 [LogitechWheelPlugin](https://github.com/HARPLab/LogitechWheelPlugin) 目前仅支持 Windows。不过，根据 [Arch Wiki](https://wiki.archlinux.org/title/Logitech_Racing_Wheel) ，应该可以在 Linux 上使用 G923。
+- 此外，尽管 CARLA 并未正式支持 MacOS，但我们在 Apple Silicon 机器上进行了开发，并且拥有 CARLA + UE4.26 的活跃分支，支持 MacOS 12+。请注意，这主要用于开发，因为它是迄今为止最受限制的系统。
 
-## Documentation & Guides
-- See [`F.A.Q. wiki`](https://github.com/HARPLab/DReyeVR/wiki/Frequently-Asked-Questions) for our Frequently Asked Questions wiki page.
-- See [`Install.md`](Docs/Install.md) to install and build DReyeVR
-- See [`Usage.md`](Docs/Usage.md) to learn how to use our provided DReyeVR features
-- See [`Development.md`](Docs/Development.md) to get started with DReyeVR development and add new features
-- See [`Docs/Tutorials/`](Docs/Tutorials/) to view several DReyeVR tutorials such as customizing the EgoVehicle, adding custom signs/props and more.
+## 文档 & 指南
+- 请参阅 [`F.A.Q. wiki`](https://github.com/HARPLab/DReyeVR/wiki/Frequently-Asked-Questions) ，了解我们的常见问题 wiki 页面。
+- 请参阅 [`Install.md`](Docs/Install.md) 来安装和构建 DReyeVR
+- 请参阅 [`Usage.md`](Docs/Usage.md) 了解如何使用我们提供的 DReyeVR 功能
+- 请参阅 [`Development.md`](Docs/Development.md) 以开始 DReyeVR 开发并添加新功能
+- 请参阅 [`Docs/Tutorials/`](Docs/Tutorials/) 查看多个 DReyeVR 教程，例如自定义 EgoVehicle、添加自定义标志/道具等。
 
 ## Citation
 If you use our work, please cite the corresponding [paper](https://arxiv.org/abs/2201.01931):
