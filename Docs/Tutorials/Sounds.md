@@ -1,114 +1,115 @@
-# Adding and using sound in Carla+`DReyeVR`
+# 在 Carla + `DReyeVR` 中添加和使用声音
 
-One of the first things you might notice when trying out `Carla` (all versions) is that there is absolutely no sound in the simulator. However, for our purposes, we are striving for an immersive experience with lots of feedback to a user about the world, and sound is a great way to add that. 
+试用 `Carla`（所有版本）时，您可能首先注意到的一件事是模拟器中完全没有声音。然而，就我们的目的而言，我们力求为用户提供沉浸式体验，并向用户提供有关世界的大量反馈，而声音是添加这种体验的好方法。
 
-In this doc we'll go over how we added sound of the following:
-1. Vehicle engine revving
-2. Other vehicle sounds (gears/turn signals)
+在本文档中，我们将介绍如何添加以下声音：
+1. 车辆发动机转速
+2. 其他车辆声音（齿轮/转向信号）
 3. Ambient world noise 
 4. Acknowledgements
 
-## Engine revving
-One of the best feedback mechanisms for a user applying throttle is the roar of an engine as the RPM increases. 
-- Yes, we know, we're using a Tesla model for our ego-vehicle but giving it engine/gear noises... blasphemy!
+## 发动机转速
+对于用户使用油门来说，最好的反馈机制之一是发动机转速增加时发出的轰鸣声。
+- 是的，我们知道，我们为我们的自我车辆使用了特斯拉模型，但却给它配备了发动机/齿轮噪音......亵渎！
 
-[**CREDITS**]Most of this section comes from this [very helpful guide on youtube](https://www.youtube.com/watch?v=-c-f1aaIOnU) which is also available in [written form as an article](https://continuebreak.com/articles/generating-setting-basic-engine-sounds-ue4-part-12/). We highly recommend taking a look at it to get step-by-step instructions and visuals for the following steps.
-### Creating the sounds
-(skip this step if you already have desired sound files for your engine)
-1. Download requisite software:
-   - [LMMS](https://lmms.io/) (download for [Linux](https://lmms.io/download#linux)/[Windows](https://lmms.io/download#windows)/[Mac](https://lmms.io/download#mac)) for creating music tracks
-2. Create 4 sounds, these correspond to when the engine is idle (1), running slowly (2), running normally (3), and running at max RPM (4)
-   - For all these tracks, we'll start with a sole TripleOscillator playing a constant C2 octave (4 beats should be fine). 
-      | Configuration                                                                                                                                                                                                                                                                                                | Visually                                                  |
+[**致谢**]本节大部分内容来自 [YouTube 上这个非常有用的指南](https://www.youtube.com/watch?v=-c-f1aaIOnU) ，该指南也 [以文章的形式提供](https://continuebreak.com/articles/generating-setting-basic-engine-sounds-ue4-part-12/) 。我们强烈建议您查看它以获取以下步骤的分步说明和视觉效果。
+### 创造声音
+（如果您已经有引擎所需的声音文件，请跳过此步骤）
+1. 下载所需软件：
+   - [LMMS](https://lmms.io/) （下载适用于 [Linux](https://lmms.io/download#linux) / [Windows](https://lmms.io/download#windows) / [Mac](https://lmms.io/download#mac ）用于创建音乐曲目 
+2. 创建 4 种声音，分别对应发动机怠速 (1)、缓慢运转 (2)、正常运转 (3) 和以最大转速运转 (4) 
+   - 对于所有这些曲目，我们将从单个 TripleOscillator 播放恒定的 C2 八度（4 个节拍应该就可以了）开始。
+      | 配置                                                                                                                                                                                                                                                                                                | 视觉                                                  |
       | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------- |
       | PM value for OSC1+OSC2 </br> PM value for OSC2+OSC3 </br> OSC1 volume of 60 </br>OSC1 CRS of -4 </br>OSC1 to use triangle wave </br> OSC2 CRS of -24 </br> OSC3 CRS of -24 </br></br> Image credits: [ContinueBreak](https://continuebreak.com/articles/generating-setting-basic-engine-sounds-ue4-part-12/) | ![TripleOscillator](../Figures/Sounds/triple_oscillator.jpg) |
-   - Then we'll want to amplify this effect by adding an LMMS-type Amplifier from the FX-Mixer window and crank the volume to the max.
-   1. This works for the idle engine sound, nothing more to do here. The remaining drive sounds will gradually increase their CRS values.
-   2. For Drive1 change OSC1 CRS to 0, OSC2 CRS to -20, OSC3 CRS to -20.
-   3. For Drive2 change OSC1 CRS to 2, OSC2 CRS to -18, OSC3 CRS to -18.
-   4. For Drive3 change OSC1 CRS to 2, OSC2 CRS to -16, OSC3 CRS to -16.
-   - Feel free to tune the sounds however you'd like, these are the recommended numbers from the [guide mentioned earlier](https://continuebreak.com/articles/generating-setting-basic-engine-sounds-ue4-part-12/)
-3. Export all the sounds as `.wav` and make sure to enable the "Export as loop" to remove end silence.
+   - 然后，我们要通过在 FX-Mixer 窗口添加 LMMS 类型的放大器来放大这种效果，并将音量调到最大。
+   1. 这适用于怠速发动机声音，这里无需执行其他操作。其余驱动声音将逐渐增加其 CRS 值。
+   2. 对于 Drive1，将 OSC1 CRS 更改为 0，将 OSC2 CRS 更改为 -20，将 OSC3 CRS 更改为 -20。
+   3. 对于 Drive2，将 OSC1 CRS 更改为 2，将 OSC2 CRS 更改为 -18，将 OSC3 CRS 更改为 -18。
+   4. 对于 Drive3，将 OSC1 CRS 更改为 2，将 OSC2 CRS 更改为 -16，将 OSC3 CRS 更改为 -16。
+   - 您可以随意调整声音，这些是前面提到的 [指南中推荐](https://continuebreak.com/articles/generating-setting-basic-engine-sounds-ue4-part-12/) 的数字
+3. 将所有声音导出 `.wav` 并确保启用“导出为循环”以消除结束静音。
 
-### Looping the sounds in Audacity
-(skip this step if your tracks already loop without discontinuities)
-1. Download requisite software
-   - [Audacity](https://www.audacityteam.org/) (download for [Linux](https://www.audacityteam.org/download/linux/)/[Windows](https://www.audacityteam.org/download/windows/)/[Mac](https://www.audacityteam.org/download/mac/)) for editing the audio tracks in post (ensure looping)
-2. Import each sound track individually to Audacity (we'll do this one-at-a-time)
-   1. When looping, you'll probably hear a sudden snap/click sound on every repeat, this is due to wave discontinuities
-3. We'll want to find where the sound starts/ends and make sure the wave approximately matches so as to have a continuous transition between repetitions.
-   1. This can be done by finding patterns from the beginning and cutting off the minimum amount from the track such that a new pattern would fit in as soon as the track ended.
+### 在 Audacity 中循环播放声音
+（如果您的曲目已经连续循环，请跳过此步骤）
+1. 下载所需软件
+   - [Audacity](https://www.audacityteam.org/) （下载适用于 [Linux](https://www.audacityteam.org/download/linux/) / [Windows](https://www.audacityteam.org/download/windows/) / [Mac](https://www.audacityteam.org/download/mac/) 的版本）用于在后期编辑音轨（确保循环）
+2. 将每个音轨单独导入 Audacity（我们将一次导入一个音轨）
+   1. 循环播放时，你可能会在每次重复时听到突然的啪啪声，这是由于波的不连续性造成的
+3. 我们要找到声音开始/结束的位置，并确保波大致匹配，以便在重复之间有连续的过渡。
+   1. 这可以通过从头开始寻找模式并从音轨上切掉最少部分来实现，这样音轨一结束，新的模式就可以适应。
 ![Audacity](../Figures/Sounds/audacity_wave.jpg)
-Image source: [ContinueBreak](https://continuebreak.com/articles/generating-setting-basic-engine-sounds-ue4-part-12/)
-1. After you cut all the tracks to be seamlessly loopable, export them to new `.wav`'s and these are ready to be taken in to the UE4 and used as vehicle noises.
-### Applying the sounds in UE4
-1. With all the desired tracks at our disposal, we'll import them all to the engine (big Import button in content-browser)
-2. Create a **SoundCue** asset (right-click in content browser -> Sounds -> SoundCue)
-   1. Open the SoundCue blueprint asset in the editor (opens new window)
-      1. Import all tracks to the blueprint, and check the **"Looping"** checkbox
-   2. Attach a **Continuous Modulator** node to each output from the Looping Wave Player's
-      1. The parameters for these Continuous Modulators define the range of input/output for these tracks (value min/max)
-      2. **NOTE** all the params have the same name `"RPM"` it is very important this is consistent as it will be used in the `C++` code
+图片来源： [ContinueBreak](https://continuebreak.com/articles/generating-setting-basic-engine-sounds-ue4-part-12/)
+1. 将所有音轨剪切为无缝循环后，将它们导出到新的.wav，然后就可以放入 UE4 中并用作车辆噪音了。
+### 在 UE4 中使用声音
+1. 有了我们所需的所有曲目，我们会将它们全部导入引擎（内容浏览器中的大导入 `Import` 按钮） 
+2. 创建 **SoundCue** 资产（在内容浏览器content browser ->“声音” Sounds ->“SoundCue” 单击鼠标右键）
+   1. 在编辑器中打开 SoundCue 蓝图资产（打开新窗口）
+      1. 将所有音轨导入蓝图，并勾选 “循环” **"Looping"** 复选框
+   2. 将连 续调制器 **Continuous Modulator** 节点连接到循环波播放器的每个输出
+      1. 这些连续调制器的参数定义了这些音轨的输入/输出范围（最小值/最大值）
+      2. **注意** 所有参数都有相同的名称 `"RPM"` ，保持一致非常重要，因为它将在 `C++` 代码中使用
       ![SoundCue](../Figures/Sounds/sound_cue.jpg)
-         - Image credits: [ContinueBreak](https://continuebreak.com/articles/generating-setting-basic-engine-sounds-ue4-part-12/)
+         - 图片来源： [ContinueBreak](https://continuebreak.com/articles/generating-setting-basic-engine-sounds-ue4-part-12/)
 
-      - These are the recommended parameter values from the guide.
-         | Parameter  | Idle     | Drive1   | Drive2   | Drive3   |
+      - 这些是指南中推荐的参数值。
+         | 参数  | Idle     | Drive1   | Drive2   | Drive3   |
          | ---------- | -------- | -------- | -------- | -------- |
-         | Name       | RPM      | RPM      | RPM      | RPM      |
+         | 名字       | RPM      | RPM      | RPM      | RPM      |
          | Default    | 1        | 1        | 1        | 1        |
          | Min Input  | 0        | 20       | 500      | 2200     |
          | Max Input  | 200      | 600      | 2800     | 5700     |
          | Min Output | 0.65     | 0.8      | 1.25     | 1.9      |
          | Max Output | 1.1      | 1.0      | 1.25     | 1.9      |
          | Param Mode | Absolute | Absolute | Absolute | Absolute |
-   3. Add a **Crossfade by Param** with 4 parameters to handle the input/output transitions
-      1. The parameters for these Continuous Modulators define how transitions are dealt with (fade in/out for each track)
-         - These are the recommended parameter values from the guide
-            | Parameter                | Idle | Drive1 | Drive2 | Drive3 |
+   3. 添加具有 4 个参数的 **Crossfade by Param** 来处理输入/输出转换
+      1. 这些连续调制器的参数定义了如何处理过渡（每个音轨的淡入/淡出）
+         - 这些是指南中推荐的参数值
+            | 参数                | Idle | Drive1 | Drive2 | Drive3 |
             | ------------------------ | ---- | ------ | ------ | ------ |
-            | Fade In RPM Value Start  | 0    | 150    | 550    | 2290   |
-            | Fade In RPM Value End    | 0    | 350    | 750    | 2340   |
-            | Fade Out RPM Value Start | 200  | 600    | 2300   | 5800   |
-            | Fade Out RPM Value End   | 400  | 800    | 2350   | 5800   |
+            | 淡入 RPM 值开始  | 0    | 150    | 550    | 2290   |
+            | 淡入 RPM 值结束    | 0    | 350    | 750    | 2340   |
+            | 淡出 RPM 值开始 | 200  | 600    | 2300   | 5800   |
+            | 淡出 RPM 值结束   | 400  | 800    | 2350   | 5800   |
             | Volume                   | 1.0  | 0.6    | 0.6    | 0.6    |
-3. Finally, you'll likely want some sort of attenuation device to fade out the noise of far away objects
-   1. Create a **Sound Attenuation** asset (right-click in content browser -> Sounds -> SoundAttenuation)
-      1. Change the **Inner Radius** to 1500
-      2. Change the **Falloff Distance** 3000
-   2. Back in the **Sound Cue** asset from step 2, scroll down in the Details pane and use the newly created **Sound Attenuation** asset as its Attenuation Settings:
+3. 最后，你可能需要某种衰减装置来消除远处物体的噪音
+   1. 创建声音衰减 **Sound Attenuation** 资产（在内容浏览器 `content browser` -> 声音 `Sounds` -> 声音衰减 `SoundAttenuation` 单击鼠标右键）
+      1. 将内半径 **Inner Radius** 改为1500
+      2. 将衰减距离 **Falloff Distance** 改为 3000
+   2. 返回步骤 2 中的 **Sound Cue** 资产，在“详细信息” Details 窗格中向下滚动并使用新创建的声音衰减 **Sound Attenuation** 资产作为其衰减设置：
    
       ![SoundAttenuation](../Figures/Sounds/sound_attenuation.jpg)
-         - Image credits: [ContinueBreak](https://continuebreak.com/articles/generating-setting-basic-engine-sounds-ue4-part-12/)
+         - 图片来源： [ContinueBreak](https://continuebreak.com/articles/generating-setting-basic-engine-sounds-ue4-part-12/)
 
-## Other vehicle noises
-Generally, adding sounds can get complicated like the above, or they can be very simple for something quick.
-- For example, adding sound for **gear shifting** is much simpler:
-  - We only need to import a clean (allowed) `.wav` file to create a **SoundWave** instance
-  - Then we can directly play that SoundWave asset from within the Ego-Vehicle
-- Similarly, adding sounds for **turn-signals** is essentially the same:
-  - Just need to import the sounds, find them in code, and play them on our desired events
+## 其他车辆噪音
+一般来说，添加声音可能会像上面一样复杂，或者对于某些快速的事情来说它们可以非常简单。
+- 例如，添加 换档 **gear shifting** 声音就简单得多：
+  - 我们只需要导入一个干净的（允许的） `.wav` 文件即可创建 **SoundWave** 实例
+  - 然后我们可以直接从 Ego-Vehicle 中播放该 SoundWave 资产
+- 类似地，添加转向信号 **turn-signals** 的声音本质上是相同的：
+  - 只需导入声音，在代码中找到它们，然后在我们想要的事件上播放它们
 
-To see how we implemented our audio components in DReyeVR (for both the ego-vehicle as well as the baseline CarlaWheeledVehicle) check out [`EgoVehicle.h`](../../DReyeVR/EgoVehicle.h) and [`CarlaWheeledVehicle.h`](../../Carla/Vehicle/CarlaWheeledVehicle.h)
+要了解我们如何在 DReyeVR 中实现音频组件（针对自我车辆以及基准 CarlaWheeledVehicle），请查看 [`EgoVehicle.h`](../../DReyeVR/EgoVehicle.h) 和 [`CarlaWheeledVehicle.h`](../../Carla/Vehicle/CarlaWheeledVehicle.h)
 
-## Ambient noise in the World
-It's also doable (and fairly easy) to have ambient noise in the world that attenuates based on the distance to the source. 
 
-For reference, our provided Town03 has sound cues like this:
+## 世界中的环境噪声
+
+让世界上的环境噪音根据与声源的距离而衰减也是可行的（并且相当容易）。
+
+作为参考，我们提供的 Town03 有这样的声音提示：
 ![WorldSound](../Figures/Sounds/sound_selected.jpg)
 
-Notice that once you drag & drop the sounds into the world, make sure to enable the **Override Attenuation** checkbox so you can edit the attenuation function, shape, and radius. 
-- The Inner Radius denotes the region where the volume is maximized
-- The FallOff Distance denotes the region where the attenuation function gets executed and fades in/out
+请注意，将声音拖放到世界中后，请确保启用“覆盖衰减” **Override Attenuation** 复选框，以便您可以编辑衰减函数、形状和半径。
+- 内半径 Inner Radius 表示体积最大化的区域
+- 衰减距离 FallOff Distance 表示衰减函数执行和淡入/淡出的区域
 
-
-Our general strategy for simple ambient noise in the world follows these basic rules:
-1. Wind is universal, so always have a big box covering the entire map that is the `Starter_Wind05`, usually we set its default volume to 70%
-2. Birds are a indicator of green/trees/suburbs, so usually wherever there is green, we add a region of `Starter_Birds01`
-3. Smoke is a good indicator for industry/city/buildings, so usually where there are lots of buildings/downtown, we'll use `Starter_Smoke01`
-4. Steam works well for underground/dirty situations, so tunnels/railroads work well with `Starter_Steam01`
-5. Water is very useful whenever there is water in the scene (`Water`), but it is much nicer to keep 3D sound enabled
-   1. ie. don't uncheck `Enable Spatialization` (so the birds are audible entirely within this region)
+我们针对世界上简单的环境噪声的一般策略遵循以下基本规则：
+1. 风是普遍存在的，所以总是有一个覆盖整个地图的大框，即 `Starter_Wind05` ，通常我们将其默认音量设置为70\%
+2. 鸟类是绿地/树木/郊区的指示器，所以通常哪里有绿地，我们就添加一个 `Starter_Birds01` 区域
+3. 烟雾是工业/城市/建筑物的良好指标，因此通常在建筑物/市中心较多的地方，我们会使用 `Starter_Smoke01`
+4. 蒸汽非常适合地下/肮脏的环境，因此隧道/铁路非常适合 `Starter_Steam01`
+5. 只要场景中有水，水就非常有用（水`Water`），但最好保持 3D 声音处于启用状态
+   1. 即不要取消选中“启用空间化”`Enable Spatialization`（这样鸟儿的声音才能完全在这个区域内听到）
 
 For custom tuning the attenuation parameters, see the `Details` pane after spawning an AmbientSound instance. It is also recommended to see this [Unreal Engine documentation on Audio Attenuation](https://docs.unrealengine.com/en-US/WorkingWithMedia/Audio/DistanceModelAttenuation/index.html)
 | Example attenuation parameter settings  | Bird sounds selected  |

@@ -73,7 +73,7 @@
   - 特别适用于无需重新编译所有内容即可更改参数。
   - 使用标准 c++ io 管理来读取文件，对性能的影响最小。请参阅 [DReyeVRUtils.h](DReyeVR/DReyeVRUtils.h) 。
 - 世界环境音频
-  - 鸟鸣声、风声、烟雾声等（参见 [Docs/Sounds.md](Docs/Sounds.md) ） 
+  - 鸟鸣声、风声、烟雾声等（参见 [Docs/Tutorials/Sounds.md](Docs/Tutorials/Sounds.md) ） 
 - 非自我为中心的音频（非自我车辆的发动机转速）
 - 同步重放并逐帧捕获以进行事后分析（参见 [Docs/Usage.md](Docs/Usage.md) ） 
 - 记录器/重放器媒体功能
