@@ -5,8 +5,8 @@
 在本文档中，我们将介绍如何添加以下声音：
 1. 车辆发动机转速
 2. 其他车辆声音（齿轮/转向信号）
-3. Ambient world noise 
-4. Acknowledgements
+3. 环境噪音 
+4. 致谢
 
 ## 发动机转速
 对于用户使用油门来说，最好的反馈机制之一是发动机转速增加时发出的轰鸣声。
@@ -21,7 +21,7 @@
    - 对于所有这些曲目，我们将从单个 TripleOscillator 播放恒定的 C2 八度（4 个节拍应该就可以了）开始。
       | 配置                                                                                                                                                                                                                                                                                                | 视觉                                                  |
       | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------- |
-      | PM value for OSC1+OSC2 </br> PM value for OSC2+OSC3 </br> OSC1 volume of 60 </br>OSC1 CRS of -4 </br>OSC1 to use triangle wave </br> OSC2 CRS of -24 </br> OSC3 CRS of -24 </br></br> Image credits: [ContinueBreak](https://continuebreak.com/articles/generating-setting-basic-engine-sounds-ue4-part-12/) | ![TripleOscillator](../Figures/Sounds/triple_oscillator.jpg) |
+      | PM value for OSC1+OSC2 </br> PM value for OSC2+OSC3 </br> OSC1 volume of 60 </br>OSC1 CRS of -4 </br>OSC1 to use triangle wave </br> OSC2 CRS of -24 </br> OSC3 CRS of -24 </br></br> 图片来源： [ContinueBreak](https://continuebreak.com/articles/generating-setting-basic-engine-sounds-ue4-part-12/) | ![TripleOscillator](../Figures/Sounds/triple_oscillator.jpg) |
    - 然后，我们要通过在 FX-Mixer 窗口添加 LMMS 类型的放大器来放大这种效果，并将音量调到最大。
    1. 这适用于怠速发动机声音，这里无需执行其他操作。其余驱动声音将逐渐增加其 CRS 值。
    2. 对于 Drive1，将 OSC1 CRS 更改为 0，将 OSC2 CRS 更改为 -20，将 OSC3 CRS 更改为 -20。
@@ -56,7 +56,7 @@
          | 参数  | Idle     | Drive1   | Drive2   | Drive3   |
          | ---------- | -------- | -------- | -------- | -------- |
          | 名字       | RPM      | RPM      | RPM      | RPM      |
-         | Default    | 1        | 1        | 1        | 1        |
+         | 默认    | 1        | 1        | 1        | 1        |
          | Min Input  | 0        | 20       | 500      | 2200     |
          | Max Input  | 200      | 600      | 2800     | 5700     |
          | Min Output | 0.65     | 0.8      | 1.25     | 1.9      |
@@ -111,31 +111,31 @@
 5. 只要场景中有水，水就非常有用（水`Water`），但最好保持 3D 声音处于启用状态
    1. 即不要取消选中“启用空间化”`Enable Spatialization`（这样鸟儿的声音才能完全在这个区域内听到）
 
-For custom tuning the attenuation parameters, see the `Details` pane after spawning an AmbientSound instance. It is also recommended to see this [Unreal Engine documentation on Audio Attenuation](https://docs.unrealengine.com/en-US/WorkingWithMedia/Audio/DistanceModelAttenuation/index.html)
-| Example attenuation parameter settings  | Bird sounds selected  |
+要自定义调整衰减参数，请在生成 AmbientSound 实例后查看“详细信息” `Details` 窗格。还建议参阅 [有关音频衰减 Audio Attenuation 的虚幻引擎文档](https://docs.unrealengine.com/en-US/WorkingWithMedia/Audio/DistanceModelAttenuation/index.html)
+| 衰减参数设置示例  | 已选择鸟叫声  |
 | --- | --- |
-| ![BirdAttenuation](../Figures/Sounds/bird_attenuation.jpg) | ![BirdAttenuation](../Figures/Sounds/bird_selected.jpg)</br> In the World Outliner simply searching for "Sound" returns all AmbientSound instances |
+| ![BirdAttenuation](../Figures/Sounds/bird_attenuation.jpg) | ![BirdAttenuation](../Figures/Sounds/bird_selected.jpg)</br> 在 World Outliner 中，只需搜索“Sound”即可返回所有 AmbientSound 实例 |
 
-For reference, our birds ambient noise for Town03 looks like the following:
+作为参考，Town03 的鸟类环境噪音如下所示：
 ![BirdAttenuation](../Figures/Sounds/bird_world.jpg)
-It is difficult to see the orange lines denoting our attenuation spheres, but all three are selected and displayed (generally over all grassy patches). 
+很难看到表示衰减球体的橙色线，但所有三条线都被选中并显示（通常覆盖所有草地）。
 
-We also added other custom sounds such as slight water splashing (works well with the fountain in the middle).
+我们还添加了其他自定义声音，例如轻微的水花声（与中间的喷泉配合良好）。
 
-Additionally, some maps are surrounded by water, this poses a challenge because often the coasts are very curvy and keeping a 3D sound spatialization only works if the sound is general enough to be emitting from the general body of water. This works great for the fountain where the water is symmetric, but require more granularly placed AmbientSounds in the world as follows (Town04):
+此外，有些地图被水包围，这带来了挑战，因为海岸线通常非常弯曲，只有当声音足够普遍，能够从一般水体发出时，保持 3D 声音空间化才有效。这对于水对称的喷泉非常有效，但需要在世界中更精细地放置环境声音，如下所示（Town04）：
 
 ![WaterWorld](../Figures/Sounds/water_world.jpg)
 
-It is more tedious to place these smaller & more granular sound components in the world, but they make for a much better experience and are relatively quick to edit (just copy & paste & move around).
+将这些更小、更精细的声音组件放置在世界上更加繁琐，但它们可以带来更好的体验，并且编辑起来相对较快（只需复制、粘贴和移动）。
 
-**NOTE** there is probably a better way (such as [audio splines](https://blog.audiokinetic.com/volumetric_audio_emitter_for_custom_shapes_in_ue4/)) to do this so we don't need to place a bunch of small sound sources. 
+**注意** 可能有更好的方法（例如 [音频样条线audio splines](https://blog.audiokinetic.com/volumetric_audio_emitter_for_custom_shapes_in_ue4/) ）来做到这一点，这样我们就不需要放置一堆小声源。
 
-## Acknowledgements
-- We used the Arthur Ontuzhan's [ContinueBreak guide](https://continuebreak.com/articles/generating-setting-basic-engine-sounds-ue4-part-12) for developing our engine revving sound. 
-- These are the sources from which we obtained our audio files. Some files have been modified to better suit DReyeVR's needs. 
+## 致谢
+- 我们使用 Arthur Ontuzhan 的 [ContinueBreak 指南](https://continuebreak.com/articles/generating-setting-basic-engine-sounds-ue4-part-12) 来开发我们的引擎轰鸣声。
+- 这些是我们从中获取音频文件的来源。一些文件已被修改以更好地满足 DReyeVR 的需求。
    - Light01, Light02, Smoke01, Starter_Birds01, Starter_Wind05, Starter_Wind06, Steam01
-      - These all come from the [UE4 starter content pack](https://docs.unrealengine.com/4.27/en-US/Basics/Projects/Browser/Packs/)
-   - Water ([source](https://www.youtube.com/watch?v=QCvnqJz-qIo))
-   - Crash ([source](https://www.youtube.com/watch?v=flMN4ME3isU))
-   - Turn signals ([source](https://www.youtube.com/watch?v=EYIw9-pnScQ))
-   - Gear shift ([source](https://www.youtube.com/watch?v=g_Gfkgfbz20))
+      - 这些都来自 [UE4 入门内容包](https://docs.unrealengine.com/4.27/en-US/Basics/Projects/Browser/Packs/)  
+   - 水 ([源](https://www.youtube.com/watch?v=QCvnqJz-qIo))
+   - 碰撞 ([源](https://www.youtube.com/watch?v=flMN4ME3isU))
+   - 转向信号 ([源](https://www.youtube.com/watch?v=EYIw9-pnScQ))
+   - 换挡 ([源](https://www.youtube.com/watch?v=g_Gfkgfbz20))
