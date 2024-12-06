@@ -1,10 +1,10 @@
-# Using `DReyeVR`
+# 使用 `DReyeVR`
 
 Now that you have DReyeVR up and running, this guide will highlight some useful features for researchers using DReyeVR:
-- [Maneuvering the Ego-vehicle](Usage.md#maneuvering-the-ego-vehicle)
-- [Using the PythonAPI](Usage.md#using-the-pythonapi)
-- [Recording/replaying a scenario](Usage.md#recordingreplaying-a-scenario)
-- [Switching control from manual to AI (handoff)](Usage.md#control-handoff-to-ai)
+- [操纵自我车辆](Usage.md#maneuvering-the-ego-vehicle)
+- [使用 PythonAPI](Usage.md#using-the-pythonapi)
+- [记录/重放一个场景](Usage.md#recordingreplaying-a-scenario)
+- [将控制从手动切换到 AI（切换）](Usage.md#control-handoff-to-ai)
 - [Using our config file to modify DReyeVR params](Usage.md#using-our-custom-config-file)
 - [Synchronized replay with frame capture](Usage.md#synchronized-replay-frame-capture)
 - [Other guides](Usage.md#other-guides)

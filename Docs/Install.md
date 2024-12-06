@@ -1,105 +1,107 @@
-# Installing `DReyeVR` to a working Carla 0.9.13 build
-## Prerequisites
-- Make sure your machine satisfies the prerequisites required by Carla: [Windows](https://carla.readthedocs.io/en/0.9.13/build_windows), [Linux](https://carla.readthedocs.io/en/0.9.13/build_linux), [Mac*](https://github.com/GustavoSilvera/carla/blob/m1/Docs/build_mac.md)
-- **IMPORTANT**: If on **Windows** you will **need** [`Make-3.81`](https://gnuwin32.sourceforge.net/packages/make.htm) as per the [Carla documentation](https://carla.readthedocs.io/en/latest/build_windows/#system-requirements)
-- If you have previously installed Carla in your PYTHONPATH, you'll need to remove any prior PythonAPI installations
-  - For instance, if you [installed carla via pip](https://pypi.org/project/carla/), you'll **need to uninstall** it to proceed.
+# 在构建的Carla 0.9.13工作空间中安装 `DReyeVR`
+## 要求
+- 确保您的机器满足 Carla 要求的先决条件： [Windows](https://carla.readthedocs.io/en/0.9.13/build_windows), [Linux](https://carla.readthedocs.io/en/0.9.13/build_linux), [Mac*](https://github.com/GustavoSilvera/carla/blob/m1/Docs/build_mac.md)
+- **重要**：如果在 **Windows** 上，则 **需要** [`Make-3.81`](https://gnuwin32.sourceforge.net/packages/make.htm) ，如 [Carla 文档](https://carla.readthedocs.io/en/latest/build_windows/#system-requirements) 所述
+- 如果你之前已经在 PYTHONPATH 中安装了 Carla，则需要删除所有之前的 PythonAPI 安装
+  - 例如，如果您 [通过 pip 安装了 carla](https://pypi.org/project/carla/) ，则 **需要将其卸载** 才能继续。
     ```bash
     pip uninstall carla
     ```
 
-## Getting started
-- You should first make sure DReyeVR is downloaded:
+## 开始 Getting started
+- 应该首先保证 DReyeVR 已经下载：
   ```bash
   git clone https://github.com/HARPLab/DReyeVR --depth 1
   ```
-- You'll first need to install [Unreal Engine 4.26 (CARLA fork)](https://github.com/CarlaUnreal/UnrealEngine) from source
+- 首先需要从源代码安装虚 [幻引擎 4.26（CARLA fork）](https://github.com/CarlaUnreal/UnrealEngine) 
   ```bash
   git clone https://github.com/CarlaUnreal/UnrealEngine
-  # set this location to your $UE4_ROOT environment variable
+  # 将此位置设置为您的 $UE4_ROOT 环境变量
   ```
 
-  **IMPORTANT** on DReyeVR for Carla 0.9.13 you'll need to revert the UE4 repository to a supported version (for DReyeVR). This is to optimize the DX11 rendering performance which in our testing has been the optimal render backend for VR. 
+  **重要** 在 DReyeVR for Carla 0.9.13 上，您需要将 UE4 存储库恢复为受支持的版本（用于 DReyeVR）。这是为了优化 DX11 渲染性能，在我们的测试中，DX11 是 VR 的最佳渲染后端。
   ```bash
   # in $UE4_ROOT
   git checkout d40ec35474e8793b4eea60dba6c4f051186e458e
   # or git reset --hard d40ec35474e8793b4eea60dba6c4f051186e458e
   ```
 
-  - **IMPORTANT:** if the `git clone` link does not work for you, you probably need to [join the Epic Games Organization](https://www.unrealengine.com/en-US/ue4-on-github) to get access to UnrealEngine and all of its forks. 
-  - UE4 build instructions for your system can be found here: [Windows](https://carla.readthedocs.io/en/0.9.13/build_windows/#unreal-engine), [Linux](https://carla.readthedocs.io/en/0.9.13/build_linux/#unreal-engine), [Mac*](https://github.com/GustavoSilvera/carla/blob/m1/Docs/build_mac.md#unreal-engine-fork )
-  <!-- - NOTE: We only keep our own HARPLab fork of Carla's fork to preserve version compatibility and enable minor features that Carla doesn't need (ex. foveated rendering). -->
-  - In order to successfully run Setup.sh, you will need to download and replace the Commit.gitdeps.xml file within /Engine/Build. See updated XML file at [Commit.gitdeps.xml](https://github.com/HARPLab/UnrealEngine/blob/DReyeVR-0.9.13/Engine/Build/Commit.gitdeps.xml)
+  - **重要：** 如果 `git clone` 链接对您不起作用，您可能需要 [加入 Epic Games 组织](https://www.unrealengine.com/en-US/ue4-on-github) 才能访问 UnrealEngine 及其所有分支。
+  - 适用于您的系统的 UE4 构建说明可在此处找到：[Windows](https://carla.readthedocs.io/en/0.9.13/build_windows/#unreal-engine) 、[Linux](https://carla.readthedocs.io/en/0.9.13/build_linux/#unreal-engine) 、[Mac*](https://github.com/GustavoSilvera/carla/blob/m1/Docs/build_mac.md#unreal-engine-fork) 
+  <!-- - 注意：我们只保留了 Carla 分支的我们自己的 HARPLab 分支，以保持版本兼容性并启用 Carla 不需要的次要功能（例如，注视点渲染）。  -->
+  - 为了成功运行 `Setup.sh`，您需要下载并替换 `/Engine/Build` 中的 Commit.gitdeps.xml 文件。请参阅 [Commit.gitdeps.xml](https://github.com/HARPLab/UnrealEngine/blob/DReyeVR-0.9.13/Engine/Build/Commit.gitdeps.xml) 中更新的 XML 文件
 
-- You'll then need to clone and build a [vanilla Carla 0.9.13](https://carla.readthedocs.io/en/0.9.13/#building-carla)
+<!-- vanilla 原意是指原味、香草，引申义就是原始的、最初的版本 --> 
+- 然后你需要克隆并构建一个 [vanilla Carla 0.9.13](https://carla.readthedocs.io/en/0.9.13/#building-carla) 
   ```bash
   git clone https://github.com/carla-simulator/carla -b 0.9.13 --depth 1
   ```
-  -  Use [Building on Linux](https://carla.readthedocs.io/en/0.9.13/build_linux/) for all versions up to Ubuntu 18.04 or [Building on Windows](https://carla.readthedocs.io/en/0.9.13/build_windows/) to follow their instructions on building CARLA 0.9.13. Use [our Ubuntu 20.04 CARLA installation guide](Install_Ubuntu.md) for Ubuntu 20.04.
-- (Optional) Similarly, you can install a vanilla [Carla Scenario Runner v0.9.13 ](https://github.com/carla-simulator/scenario_runner/tree/v0.9.13) project to integrate DReyeVR+Carla with Scenario Runner. 
+  - 使用 [Building on Linux](https://carla.readthedocs.io/en/0.9.13/build_linux/)（适用于 Ubuntu 18.04 及以下的所有版本）或 [Building on Windows](https://carla.readthedocs.io/en/0.9.13/build_windows/) （按照其说明构建 CARLA 0.9.13）。使用我们的 Ubuntu 20.04 Carla 安装指南（适用于 Ubuntu 20.04）。
+- （可选）同样，您可以安装原始的 [Carla Scenario Runner v0.9.13 ](https://github.com/carla-simulator/scenario_runner/tree/v0.9.13) 项目，将 DReyeVR+Carla 与 Scenario Runner 集成。
   ```bash
   git clone https://github.com/carla-simulator/scenario-runner -b v0.9.13 --depth 1
   ```
 
-(*=The Mac operating system is no longer officially supported by Carla but our development team has made it possible to build both UE4, Carla, and DReyeVR on new Mac machines with Apple Silicon (arm64) hardware. )
+(*=Carla 不再正式支持 Mac 操作系统，但我们的开发团队已能够在搭载 Apple Silicon（arm64）硬件的新 Mac 机器上构建 UE4、Carla 和 DReyeVR。 )
 
 <br>
 
-# DReyeVR installation command summary
+# DReyeVR 安装命令总结
 <details>
 
-**NOTE** You'll need a terminal on Linux/Mac. On Windows you'll be fine with the same x64 Native Tools CMD prompt that you used to build Carla.  
-<summary> Show command lines to install and build DReyeVR </summary>
+**注意** 您需要在 Linux/Mac 上安装一个终端。在 Windows 上，您可以使用与构建 Carla 时相同的 x64 Native Tools CMD prompt。 
+<summary> 显示用于安装和构建 DReyeVR 的命令行 </summary>
 
 ```bash
-mkdir CarlaDReyeVR && cd CarlaDReyeVR # doing everything in this "CarlaDReyeVR" directory
+mkdir CarlaDReyeVR && cd CarlaDReyeVR # 在这个 "CarlaDReyeVR" 目录中做所有事
 
 #####################################################
-########### install OUR UnrealEngine fork ###########
+########### 安装我们的 UnrealEngine fork ###########
 #####################################################
 # Rather than https://github.com/CarlaUnreal/UnrealEngine UE4, you SHOULD clone https://github.com/HARPLab/UnrealEngine
-# but otherwise all instructions remain the same. 
+# 但除此之外，所有的指令都是一样的。 
 
 # Linux: https://carla.readthedocs.io/en/0.9.13/build_linux/#unreal-engine
 # Windows: https://carla.readthedocs.io/en/0.9.13/build_windows/#unreal-engine
 
 #####################################################
-################### install Carla ###################
+################### 安装 Carla ###################
 #####################################################
 # Linux: https://carla.readthedocs.io/en/0.9.13/build_linux/
 # Windows: https://carla.readthedocs.io/en/0.9.13/build_windows/
 git clone https://github.com/carla-simulator/carla -b 0.9.13 --depth 1
 cd carla
 ./Update.sh # linux/mac
-Update.bat # Windows
-make PythonAPI && make launch # to build vanilla Carla
+Update.bat # Windows（已经失效，需要克隆然后切换到tag 为0.9.13的提交记录）
+git clone https://bitbucket.org/carla-simulator/carla-content.git
+make PythonAPI && make launch # 构建最初的 Carla
 
 #####################################################
-############## install DReyeVR plugins ##############
+############## 安装 DReyeVR 插件 ##############
 #####################################################
-# (optional) install SRanipal (eye tracking)
+# (可选) 安装 SRanipal (眼动跟踪) SRanipal plugin
 mv /PATH/TO/SRANIPALPLUGIN/SDK/03_Unreal/Plugins/SRanipal Unreal/CarlaUE4/Plugins/ 
 
-# (optional) install LogitechWheelPlugin (steering wheel)
+# (可选) 安装 LogitechWheelPlugin (steering wheel)
 git clone https://github.com/HARPLab/LogitechWheelPlugin
 mv LogitechWheelPlugin/LogitechWheelPlugin Unreal/CarlaUE4/Plugins/ # install to carla
 
-cd .. # back to main directory
+cd .. # 回到主目录
 
 #####################################################
-############## install scenario_runner ##############
+############## 安装 scenario_runner #################
 #####################################################
-# (optional) while you don't NEED scenario runner, it is certainly useful from a research pov
+# (可选) while you don't NEED scenario runner, it is certainly useful from a research
 git clone https://github.com/carla-simulator/scenario_runner -b v0.9.13
 
 #####################################################
-################## install DReyeVR ##################
+################## 安装 DReyeVR ##################
 #####################################################
 git clone https://github.com/HARPLab/DReyeVR
 cd DReyeVR
-# the CARLA= and SR= variables are optional
+# CARLA= 和 SR= 变量是可选的
 make install CARLA=../carla SR=../scenario_runner
-# or
+# 或者
 make install CARLA=../carla
 make install SR=../scenario_runner
 
@@ -108,7 +110,7 @@ make check CARLA=../carla
 cd ..
 
 #####################################################
-################## build everything #################
+################## 构建所有 #########################
 #####################################################
 cd carla
 make PythonAPI  # build the PythonAPI (and LibCarla) again
@@ -121,20 +123,20 @@ make check      # run Carla unit tests
 
 <br>
 
-## Simple install
-Technically, the above prerequisites are all you really need to install DReyeVR and get a barebones VR ego-vehicle with **no eyetracking** and **no racing wheel integration**. If this suits your needs, simply skip down to the [Install DReyeVR Core](Install.md#installing-dreyevr-core) section of this doc and set the following variables in `Unreal/CarlaUE4/Source/CarlaUE4/CarlaUE4.Build.cs` to `false`:
+## 简单安装
+从技术上讲，上述先决条件就是您安装 DReyeVR 并获得**没有眼动追踪**和**赛车方向盘集成**的准系统 VR ego-vehicle 所需的全部条件。如果这适合您的需求，只需跳到本文档的 [安装 DReyeVR Core](Install.md#installing-dreyevr-core) 部分，并在以下位置设置以下变量：`Unreal/CarlaUE4/Source/CarlaUE4/CarlaUE4.Build.cs` 成 `false`：
 ```c#
 /////////////////////////////////////////////////////////////
-// Edit these variables to enable/disable features of DReyeVR
+// 编辑这些变量以启用/禁用 DReyeVR 的功能
 bool UseSRanipalPlugin = true;
 bool UseLogitechPlugin = true;
 ...
 /////////////////////////////////////////////////////////////
 ```
-- NOTE: you only need to install the SRanipal plugin if `UseSRanipalPlugin` is enabled, and similarly you only need to install the Logitech plugin if `UseLogitechPlugin` is enabled. 
+- 注意：仅当启用了 `UseSRanipalPlugin` 时才需要安装 SRanipal 插件，同样，仅当启用了 `UseLogitechPlugin` 时才需要安装 Logitech 插件。
 
 
-# Installing DReyeVR Plugins
+# 安装 DReyeVR 插件
 Before installing `DReyeVR`, we'll also need to install the dependencies:
 - **SteamVR**: Required for VR
 - **SRanipal***: Required for eye tracking (with HTC Vive Pro Eye), optional otherwise
@@ -232,7 +234,7 @@ Before installing `DReyeVR`, we'll also need to install the dependencies:
 <br>
 <br>
 
-# Installing `DReyeVR` Core
+# 安装 `DReyeVR` 核心
 <!-- (Once you are done with this step, you should have a carla repo that looks just like this [Carla fork](https://github.com/HARPLab/carla/tree/DReyeVR-0.9.13) we created with the installation (and other minor things) pre-applied.) -->
 
 - **IMPORTANT** The installation requires that `make`, `python` and `git` are available on your shell.
@@ -252,7 +254,7 @@ make check CARLA=../carla
 **NOTE:** to learn more about how the DReyeVR `make` system works, see [`Scripts/README.md`](../Scripts/README.md)
 
 
-# Building `DReyeVR` PythonAPI
+# 构建 `DReyeVR` PythonAPI
 ## Using [`conda`](https://www.anaconda.com/products/distribution) for the PythonAPI
   - While not required for DReyeVR, we highly recommend compartmentalizing Python installations via isolated environments such as [`anaconda`](https://www.anaconda.com/products/distribution)
     - First download and install Anaconda to your machine from [here](https://www.anaconda.com/products/distribution).
@@ -379,7 +381,7 @@ Additionally, if you make changes to the `PythonAPI` source and need to rebuild 
     ```
 
 
-# Upgrading `DReyeVR`
+# 升级 `DReyeVR`
 If you currently have an older version of `DReyeVR` installed and want to upgrade to a newer version, it is best to re-install DReyeVR from a fresh Carla repository. You can manually delete the `carla` repository and re-clone it directly (carefully ensuring the versions match) or use our provided scripts which attempt to reset the repository for you:
 
 <details>
@@ -429,7 +431,7 @@ As long as you have no errors in the previous sections, you should be able to ju
 <br>
 <br>
 
-# Building `DReyeVR` UE4
+# 构建 `DReyeVR` UE4
 If you are not interested in using SRanipal or the LogitechWheelPlugin, you can disable these at compile-time by changing the variables in `Unreal/CarlaUE4/Source/CarlaUE4/CarlaUE4.Build.cs` to `false`:
 ```c#
   /////////////////////////////////////////////////////////////
@@ -449,9 +451,9 @@ make launch     # build the development UE4 game in editor
 make package    # build the optimized UE4 packaged game (shipping)
 ```
 
-# Running `DReyeVR`
+# 运行 `DReyeVR`
 
-With the shipping package built, run the Carla (with DReyeVR installed) executable in VR mode with:
+构建运输 shipping 包后，在 VR 模式下运行 Carla（安装了 DReyeVR）可执行文件：
 ```bash
 # on Unix
 cd /PATH/TO/CARLA/Dist/CARLA_Shipping_0.9.13-dirty/LinuxNoEditor/ # or MacNoEditor on MacOS
@@ -463,9 +465,9 @@ CarlaUE4.exe -vr
 
 # Optional flag: -quality-level=Low
 ```
-**NOTE:** To greatly boost the framerates without losing much visual fidelity you can run with the additional argument `-quality-level=Low` which we modified from vanilla Carla to preserve the same rendering distance.
+**注意：** 为了在不损失太多视觉保真度的情况下大幅提高帧速率，您可以使用附加参数 `-quality-level=Low` 运行，我们从 vanilla Carla 对其进行了修改，以保持相同的渲染距离。
 
-**NOTE 2** You also don't necessarily NEED to run DReyeVR in VR. If you omit the `-vr` flag then you will be greeted with a flat-screen Carla game with the same features available for DReyeVR, just not in VR. 
+**注意 2** 您也不一定需要在 VR 中运行 DReyeVR。如果您省略 `-vr` 标志，那么您将看到一款平板 Carla 游戏，该游戏具有 DReyeVR 的相同功能，只是不在 VR 中。
 
 <br>
 
