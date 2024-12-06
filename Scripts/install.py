@@ -34,11 +34,11 @@ def install_over(
 ) -> None:
     if ROOT is None:
         return
-    # begin installation process
-    ROOT_ABS = os.path.abspath(ROOT)  # convert to absolute path
+    # 开始安装过程
+    ROOT_ABS = os.path.abspath(ROOT)  # 转换为绝对路径
     # verify that the root exists and files in "check_files" exist
     verify_installation(ROOT_ABS, check_files)
-    # verify the git version of this repository matches
+    # 验证该仓库和git版本匹配
     if verify_version(ROOT_ABS, git_tag) == False:
         return
     print_line()
@@ -69,6 +69,7 @@ if __name__ == "__main__":
     args = default_args(DOC_STRING)
 
     print_line()
+    # 在原来的carla基础上进行DReyeVR安装
     install_over(
         ROOT=args.carla,
         correspondences_file=CARLA_PATH_FILE,
