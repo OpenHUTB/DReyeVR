@@ -78,7 +78,7 @@
 - 同步重放并逐帧捕获以进行事后分析（参见 [Docs/Usage.md](Docs/Usage.md) ） 
 - 记录器/重放器媒体功能
   - 添加了游戏内键盘命令播放/暂停/前进/后退/等。
-- 用于自然导航的静态环境方向标志（参见 [`Docs/Signs.md`](Docs/Signs.md) ）
+- 用于自然导航的静态环境方向标志（参见 [`Docs/Signs.md`](Docs/Tutorials/Signs.md) ）
 - 将天气信息添加到 Carla 记录器/重放器/查询中（参见此 [Carla PR](https://github.com/carla-simulator/carla/pull/5235) ）
 - 自定义动态 3D 参与者，具有全面录制支持（例如方向的头显指示器、AR 边界框、视觉目标等）。有关更多信息，请参阅 [CustomActor.md](Docs/CustomActor.md) 。 
 - （仅调试）注视点渲染可通过注视感知（或固定）可变速率着色来提高性能

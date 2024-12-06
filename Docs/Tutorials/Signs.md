@@ -1,4 +1,4 @@
-# Adding custom signs in the Carla world
+# 在Carla世界中添加自定义指示牌
 
 ## What is this?
 It is often useful to have participants in an experiment know what directions to take in a natural manner without manual intervention. In Carla this is not a problem since all the drivers are AI controllers, but for humans we can't simply ingest a text file denoting waypoints and directions. This is where in-environment directional signs can be of use. Unfortunately, Carla does not provide any (since this is not a problem for them) and there were enough steps to warrant a guide, so here you go. 
