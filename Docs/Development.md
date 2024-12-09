@@ -1,11 +1,11 @@
-# `DReyeVR` Development
+# `DReyeVR` 开发
 
-For users who want a deeper dive into the inner workings of DReyeVR and how they can get started with development and writing code, look no further!
+对于想要深入了解 DReyeVR 内部工作原理以及如何开始开发和编写代码的用户来说，不用再犹豫了！
 
-(This guide assumes you've read the [`Usage.md`](../Usage.md) documentation and have `DReyeVR` installed)
+（本指南假设您已阅读  [`Usage.md`](./Usage.md) 文档并安装了 `DReyeVR`）
 
-# Getting started
-We recommend a development setup where your changes to DReyeVR can be quickly identified compared to our upstream changes. To do this we provide a fork of CARLA with DReyeVR pre-installed (and committed) so you should have a clean starting repository to work with:
+# 入门
+我们建议使用开发设置，这样可以快速识别您对 DReyeVR 的更改与我们的上游更改。为此，我们提供了一个 Carla 分支，其中预装了 DReyeVR（并已提交），因此您应该有一个干净的起始存储库可供使用：
 ```bash
 # clone our fork and replace your vanilla CARLA repository
 

@@ -11,7 +11,7 @@ Now that you have DReyeVR up and running, this guide will highlight some useful 
 
 ![UsageSchematic](Figures/Usage/UsageSchematic.jpg)
 
-# Maneuvering the Ego-vehicle
+# 操纵自我车辆
 These control schemes work both in VR and non-VR. With the main difference being that in VR you can move the camera pose and orientation with your head tracking, but in flat-screen-mode (non-VR) you'll need to use a mouse like in a first-person game. 
 - Keyboard vehicle control scheme:
   - **Camera Gaze** - When in the 2D (flat/non-VR) view, turn the camera by clicking and dragging
@@ -36,12 +36,12 @@ Note that all the keyboard inputs are defined in [`DefaultInput.ini`](../Configs
 
 However, the logitech wheel inputs are hardcoded into the source since they are checked for on every tick (instead of through the UE4 keyboard events). To see the values and modify them, see [`DReyeVRPawn.cpp`](../DReyeVR/DReyeVRPawn.cpp)
   
-# Using the PythonAPI
+# 使用 PythonAPI
 With the main Carla server running you should now be able to run all Carla provided `PythonAPI` scripts.
 - Note that not all scripts in the original [`Carla 0.9.13` PythonAPI](https://github.com/carla-simulator/carla/tree/0.9.13/PythonAPI) repo have been tested. We created some new scripts in place of others, such as `schematic_mode.py` which inherits from `no_rendering_mode.py` but adds support for our ego-vehicle and eye tracker. 
 - In some cases, we replace the old python scripts with newer ones, such as the [`no_rendering_mode.py`](https://github.com/carla-simulator/scenario_runner/blob/v0.9.13/no_rendering_mode.py) in `scenario-runner-v0.9.13` which is actually from release 0.9.5. 
 
-### Visualize in schematic mode
+### 在示意图模式下可视化
 ```bash
 cd $CARLA_ROOT/PythonAPI/examples/ # go to carla/
 
@@ -113,7 +113,7 @@ Then, in your script, you can follow the technique we used in `schematic_mode.py
 ```
 Now you can proceed to use `self.sensor.ego_sensor` as a standard [`carla.libcarla.Sensor`](https://github.com/carla-simulator/carla/blob/master/Docs/python_api.md#carlasensor) object and `self.hero_actor` as a standard [`carla.libcarla.Vehicle`](https://github.com/carla-simulator/carla/blob/master/Docs/python_api.md#carlavehicle) object. 
 
-# Recording/Replaying a scenario
+# 记录/重放一个场景
 ## Motivations
 It is often useful to record a scenario of an experiment in order to reenact it in post and perform further analysis. We had to slightly augment the recorder and replayer to respect our ego-vehicle being persistent in the world, but all other functionality is maintained. We additionally reenact the ego-sensor data (including HMD pose and orientation) so an experimenter could see what the participant was looking at on every tick. For the full explanation of the Carla recorder see their [documentation](https://carla.readthedocs.io/en/0.9.13/adv_recorder/). 
 
@@ -330,3 +330,10 @@ We have written other guides as well that serve more particular needs:
     - Additionally, environment variables are accessed `%LIKE_THIS%` instead of `$LIKE_THIS`.
     - And remember that file paths use a backwards slash to `LOCATE\FILES\THIS\WAY\` instead of `THE/NORMAL/WAY/`
 - There is a bug (we are not sure why, occurs in base carla too), where `Town06/07/10HD` are not present in the `package`d release. Some documentation [here](https://carla.readthedocs.io/en/0.9.13/start_quickstart/#import-additional-assets). 
+
+
+# 效果
+启动虚幻编辑器后，运行场景后的效果：
+![](./Figures/Usage/editor_run.png)
+
+按WADZ分别表示前进、左转、右转、后退。方向键表示视角的移动。

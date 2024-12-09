@@ -1,7 +1,7 @@
-# DReyeVR custom actors
+# DReyeVR 自定义参与者
 
-## What?
-We are often interested in spawning arbitrary "AR-like" (Augmented reality) elements in the simulator at runtime that can be completely recorded and reenacted without hassle. 
+## 什么？
+我们经常对在运行时在模拟器中生成任意的“类似增强现实” (AR, Augmented reality) 元素感兴趣，这些元素可以完全记录并轻松重现。
 
 ### Example: 3D Bounding Boxes
 - With a translucent (Opacity < 1) material we can simply create an elongated Cube actor and overlay it over any extent as a simple BBOX indicator.

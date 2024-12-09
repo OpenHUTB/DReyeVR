@@ -29,7 +29,7 @@
   - **重要：** 如果 `git clone` 链接对您不起作用，您可能需要 [加入 Epic Games 组织](https://www.unrealengine.com/en-US/ue4-on-github) 才能访问 UnrealEngine 及其所有分支。
   - 适用于您的系统的 UE4 构建说明可在此处找到：[Windows](https://carla.readthedocs.io/en/0.9.13/build_windows/#unreal-engine) 、[Linux](https://carla.readthedocs.io/en/0.9.13/build_linux/#unreal-engine) 、[Mac*](https://github.com/GustavoSilvera/carla/blob/m1/Docs/build_mac.md#unreal-engine-fork) 
   <!-- - 注意：我们只保留了 Carla 分支的我们自己的 HARPLab 分支，以保持版本兼容性并启用 Carla 不需要的次要功能（例如，注视点渲染）。  -->
-  - 为了成功运行 `Setup.sh`，您需要下载并替换 `/Engine/Build` 中的 Commit.gitdeps.xml 文件。请参阅 [Commit.gitdeps.xml](https://github.com/HARPLab/UnrealEngine/blob/DReyeVR-0.9.13/Engine/Build/Commit.gitdeps.xml) 中更新的 XML 文件
+  - 为了成功运行 `Setup.sh`，您需要下载并替换 `/Engine/Build` 中的 Commit.gitdeps.xml 文件。请参阅 [Commit.gitdeps.xml](https://github.com/HARPLab/UnrealEngine/blob/DReyeVR-0.9.13/Engine/Build/Commit.gitdeps.xml) 中更新的 XML 文件（该链接已经失效，可以使用 [这个链接](https://github.com/EpicGames/UnrealEngine/blob/4.26/Engine/Build/Commit.gitdeps.xml) 中的文件）
 
 <!-- vanilla 原意是指原味、香草，引申义就是原始的、最初的版本 --> 
 - 然后你需要克隆并构建一个 [vanilla Carla 0.9.13](https://carla.readthedocs.io/en/0.9.13/#building-carla) 
@@ -474,3 +474,28 @@ CarlaUE4.exe -vr
 # Now what?
 
 Now that you've successfully installed DReyeVR continue to [`Usage.md`](Usage.md) to learn how to use DReyeVR for your own VR driving research simulator.
+
+
+# 问题
+* 如果`make launch`报错：`UnrealBuildTool: ERROR: Could not find definition for module 'SRanipal', (referenced via Target -> CarlaUE4.Build.cs)`
+
+解决：将`DReyeVR\carla\Unreal\CarlaUE4\Source\CarlaUE4\CarlaUE4.Build.cs`中的
+```shell
+bool UseSRanipalPlugin = true;
+```
+改为：
+```shell
+bool UseLogitechPlugin = false;
+```
+
+
+* 如果`make launch`报错：`UnrealBuildTool: ERROR: Could not find definition for module 'LogitechWheelPlugin', (referenced via Target -> CarlaUE4.Build.cs))`
+
+解决：将`DReyeVR\carla\Unreal\CarlaUE4\Source\CarlaUE4\CarlaUE4.Build.cs`中的
+```shell
+bool UseLogitechPlugin = true;
+```
+改为：
+```shell
+bool UseLogitechPlugin = false;
+```
