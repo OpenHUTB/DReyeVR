@@ -499,3 +499,7 @@ bool UseLogitechPlugin = true;
 ```shell
 bool UseLogitechPlugin = false;
 ```
+
+* 使用`make package`打包时报错：`D:\work\DReyeVR\UnrealEngine\Engine\Source\Programs\AutomationTool\HoloLens\HoloLensPlatform.Automation.cs(1228,70): error CS0246: 未能找到类型或命名空间名“DeploymentProgress”(是否缺少 using 指令或程序集引用?) [D:\work\DReyeVR\UnrealEngine\Engine\Source\Programs\AutomationTool\HoloLens\HoloLens.Automation.csproj]` ，对应英文错误信息：`Error    CS0246    The type or namespace name 'DeploymentProgress' could not be found (are you missing a using directive or an assembly reference?)` 
+
+解决：参考 [编译虚幻4的AutomationTool失败](https://blog.csdn.net/qq_39130977/article/details/137996281) ，将 注册表中`HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Microsoft\Microsoft SDKs\Windows\v10.0`的`ProductVersion`改为`Windows.winmd`所在的路径的最后目录名去掉`.0`，比如`C:\Windows Kits\10\UnionMetadata\10.0.20348.0`对应的值为`10.0.20348`。

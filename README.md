@@ -8,7 +8,7 @@
 
 [![Build Status](https://github.com/HARPLab/DReyeVR/actions/workflows/ci.yml/badge.svg)](https://github.com/HARPLab/DReyeVR/actions/workflows/ci.yml)
 
-该项目扩展了 [`Carla`](https://github.com/carla-simulator/carla/tree/0.9.13) 模拟器，增加了虚拟现实集成、第一人称可操纵的自我车辆、眼动追踪支持和多种沉浸感增强功能。
+该项目扩展了 [`Carla`](https://github.com/carla-simulator/carla/tree/0.9.13) 模拟器，增加了虚拟现实集成、第一人称可操纵的自我车辆、眼动追踪支持和多种沉浸感增强功能，从 [链接](https://pan.baidu.com/s/1q96tyOIMJjpCw5KwL0qnsQ?pwd=hutb) 中下载可执行的场景文件`car/DReyeVR/CARLA_0.9.13-dirty_DReyeVR_v0.zip`。
 
 如果您有任何疑问，希望我们的常见问题解答 [F.A.Q. 维基页面](https://github.com/HARPLab/DReyeVR/wiki/Frequently-Asked-Questions) 和 [问题页面](https://github.com/HARPLab/DReyeVR/issues?q=is%3Aissue+is%3Aclosed) 可以解答其中的一些问题。
 
